@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Emotion Aware Knowledge Navigator | Main</title>
+    <link rel="shortcut icon" href="https://github.com/Harish040805/eakn/blob/main/eaknlogo.png?raw=true" type="image/x-icon">
+    <link rel="stylesheet" href="D:\eaknnewproject\eakn.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div id="splash-screen">
+        <div class="splash-aura"></div>
+        <img src="https://github.com/Harish040805/eakn/blob/main/eaknlogo.png?raw=true" alt="EAKN Logo" class="splash-image">
+        <p class="splash-text slow-blink">EAKN: Emotion Aware Knowledge Navigator and Productivity Tool <br><br> Click Here Twice For Better Interaction</p>
+    </div>
+
+    <div id="main-content" style="display: none;">
+        <div class="container">
+            <div class="side-bar left-bar">
+                <div class="task-tracker">
+                    <div>
+                        <br>
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="https://github.com/Harish040805/eakn/blob/main/eaknlogo.png?raw=true" class="top-logo" loading="lazy">
+                    </div>
+                    <br><br>
+                    <button class="camera-button" id="cameraToggleButton" onclick="handleSpeech(this, toggleCamera)" data-text="Camera Turned On">📸</button>
+                    <div class="tasktracko">
+                        <h3>📋 Task Tracker</h3>
+                    </div>
+                    <br>
+                    <div class="pad">
+                        <input type="text" id="taskInput" placeholder="📋 Enter Task" autocomplete="off">
+                        <input type="search" id="searchInput" placeholder="🔎 Search Task" autocomplete="off" oninput="displayTasks()">
+                        <input type="datetime-local" id="startTime">
+                        <input type="datetime-local" id="endTime">
+                        <button onclick="handleSpeech(this, addTask)" data-text="Add Task">➕ &nbsp; <b>Add Task</b> &nbsp; <span>🔇</span></button>                
+                    </div>
+                </div>
+            </div>
+
+        <div class="middle-containers">
+                <div class="middle-top-container">
+                <div class="top-title">
+                    &nbsp; &nbsp;
+                    <h3 style="font-size: 27.6px;">EAKN: Emotion Aware Knowledge Navigator & Productivity Tool</h3>
+                    &nbsp; &nbsp; &nbsp; &nbsp; 
+                    <button class="tts-btn" onclick="handleSpeech(this)" data-text="Emotion Aware Knowledge Navigator and Productivity Tool"><span>🔇</span></button>
+                    </div>
+                </div>
+<div class="middle-container">
+<div id="meter-wrapper">
+    <div class="meter-layout-container">
+        <div class="meter-text-column">
+            <span class="remaining-label">Remaining ⏱️ Time Left in the...</span>
+        </div>
+        <div class="meter-bars-column">
+            <div class="meter-group">
+                <div class="ind-meter-text">Day</div>
+                <div class="meter-container">
+                    <div id="independent-meter" class="meter-bar"></div>
+                </div>
+            </div>
+            <div class="meter-group">
+                <div class="ind-meter-text">Month</div>
+                <div class="meter-container">
+                    <div id="independent-meter-month" class="meter-bar"></div>
+                </div>
+            </div>
+            <div class="meter-group">
+                <div class="ind-meter-text">Year</div>
+                <div class="meter-container">
+                    <div id="independent-meter-year" class="meter-bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="media-row">
+    <div class="eakn-random-blob-container">
+        <div class="eakn-random-blob-wrapper">
+            <canvas class="eakn-random-blob"></canvas>
+        </div>
+        <div class="eakn-zoom-controls">
+            <button class="zoom-in">+</button>
+            <button class="zoom-out">−</button>
+        </div>
+    </div>
+        <div id="camera-container">
+            <img id="pythonVideoFeed" src="" style="display: none; width: 100%; height: 100%;">
+            <div id="emotionDisplay">Mood: NEUTRAL</div>
+        </div>
+</div>
+    <div id="time-spent-text"><b>⏳ Time Spent on the Screen &nbsp;</b></div>
+</div>
+    <div class="middle-container-ii" id="taskDisplay"></div>
+</div>
+            <div class="side-bar right-bar">
+                <div class="right-menu-bar-rmb">
+        <div class="clock-container">
+            <div style="font-size:32px; margin-bottom:5px;">🕰️</div>
+            <div id="dateFormat1"></div>
+                <div id="dateFormat2"></div><div id="timeFormat"></div>
+        </div>
+                    <br>
+                    🤖 EAKN A.I Assistant</div>
+                <div id="chat-display" style="height: 350px; overflow-y: auto; padding: 10px; color: rgb(40, 40, 40);">
+                    <p><i>System: AI is ready.</i></p>
+                </div>
+                <div style="padding: 10px; display: flex; flex-direction: column; gap: 10px;">
+                    <textarea id="user-input" placeholder="🤖 Talk to EAKN AI..." style="width: 98%; height: 50px; padding: 1px; border-radius: 5px; resize: none; background: #fff; color: 1a1d23; border: var(--isb);"></textarea>
+                    <button id="send-btn">📨 Send</button>
+                    <button id="clear-chat-btn">🗑️ Clear Chat History</button>
+                </div>
+            </div>
+        </div>
+<button id="openBtn">📝</button>
+<div id="dashboard">
+    <button id="closeBtn">X</button>
+    <textarea placeholder="EAKN Dashboard Type anything and autosave it..."></textarea>
+</div>
+<div id="user-display-card" class="user-identity-box">
+    <div class="user-text">
+        <span class="user-icon">👤</span>
+        <span id="logged-user-name"></span>
+        <span id="logged-user-email"></span>
+    </div>
+    <button onclick="logout()" class="signout-minimal-btn">Sign Out</button>
+</div>
+<div id="repoFloatingBtn" style="position:fixed; bottom:100px; left:30px; background:#3b83ff; color:#fff; padding:14px; border-radius:50%; cursor:pointer; 
+font-size:20px; box-shadow:0 0 15px rgba(0,0,0,.5); transition:.3s; z-index:999;" onmouseover="this.style.background='#1b67a5'"
+onmouseout="this.style.background='#3b83ff'"> 📁 </div>
+<div id="repoModal" style="position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; justify-content:center; align-items:center; z-index:1000;">
+<div style="width:85vw; height:85vh; background:#2b2b2b; border-radius:16px; padding:15px; display:flex; flex-direction:column;">
+<div style="display:flex;justify-content:space-between;align-items:center;">
+    <h3 style="color:#fff;">📁 File Repository</h3>
+    <button onclick="closeRepo()" style="background:#3b83ff; color:#fff; border:none; border-radius:6px; padding:6px 12px; cursor:pointer;">✕</button>
+</div>
+    <br>
+<div style="margin-bottom:10px;">
+    <button onclick="document.getElementById('fileInput').click()" style="background:#3b83ff; color:#fff; border:none; border-radius:8px; padding:10px 14px;
+    font-size:16px; cursor:pointer;"> ➕ Upload Files
+    </button>
+    <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.webp,.csv,.json" style="display:none;">
+</div>
+<div id="repoList" style="flex:1; overflow:auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px;"></div>
+</div>
+</div>
+<script>
+    let aiBlobColor = "#3b83ff";
+    let aiBlobPoints = 20;
+    let emotionHistory = []; 
+    const WINDOW_SIZE = 3; 
+    let currentStableMood = "NEUTRAL";
+    let eaknVoice = null;
+    let hasSpoken = false;
+    let db;
+    let screenTimeSeconds = localStorage.getItem("screenTimeSeconds") ? parseInt(localStorage.getItem("screenTimeSeconds")) : 0;
+    let emotionFetcher;
+    const pythonFeed = document.getElementById('pythonVideoFeed');
+    const emotionDiv = document.getElementById('emotionDisplay');
+    const request = indexedDB.open("TaskTrackerDB", 2); 
+    request.onupgradeneeded = (e) => {
+        db = e.target.result;
+        if (!db.objectStoreNames.contains("tasks")) {
+            db.createObjectStore("tasks", { keyPath: "id", autoIncrement: true });
+        }
+        if (!db.objectStoreNames.contains("chat_history")) {
+            db.createObjectStore("chat_history", { keyPath: "id", autoIncrement: true });
+        }
+    };
+    request.onsuccess = (e) => {
+        db = e.target.result;
+        displayTasks();
+        loadChatHistory();
+    };
+    async function loadVoice() {
+        return new Promise(resolve => {
+            let v = speechSynthesis.getVoices();
+            if (v.length !== 0) resolve(v.find(v => v.name.includes("Male")) || v[0]);
+            else {
+                speechSynthesis.onvoiceschanged = () => {
+                    v = speechSynthesis.getVoices();
+                    resolve(v.find(v => v.name.includes("Male")) || v[0]);
+                };
+            }
+        });
+    }
+    async function triggerSpeech() {
+        if (hasSpoken) return;
+        eaknVoice = await loadVoice();
+        const u = new SpeechSynthesisUtterance('Welcome to E A K N, Emotion Aware Knowledge Navigator and Productivity Tool!');
+        u.voice = eaknVoice;
+        u.pitch = 1.1;
+        u.rate = 0.9;
+        window.speechSynthesis.speak(u);
+        hasSpoken = true;
+        ['mousemove', 'keydown', 'touchstart', 'mousedown'].forEach(evt => document.removeEventListener(evt, triggerSpeech));
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const splashScreen = document.getElementById('splash-screen');
+        const mainContent = document.getElementById('main-content');
+        setTimeout(() => {
+            splashScreen.style.display = 'none';
+            mainContent.style.display = 'block';
+            document.body.style.overflow = 'auto';
+            ['mousemove', 'mouseenter', 'keydown', 'touchstart', 'mousedown'].forEach(evt => document.addEventListener(evt, triggerSpeech, { once: true }));
+        }, 3000);
+        initBlob();
+    });
+    async function addTask() {
+        const taskInput = document.getElementById("taskInput");
+        const startTime = document.getElementById("startTime");
+        const endTime = document.getElementById("endTime");
+        const taskData = {
+            title: taskInput.value,
+            start: startTime.value,
+            end: endTime.value,
+            status: "pending"
+        };
+        if (!taskData.title || !taskData.start || !taskData.end) return;
+
+    await fetch('http://127.0.0.1:5000/add_task', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(taskData)
+    });
+    taskInput.value = "";
+    displayTasks();
+}
+
+async function displayTasks() {
+    const container = document.getElementById("taskDisplay");
+    const searchInput = document.getElementById("searchInput");
+    if (!container) return;
+
+    const searchQuery = searchInput ? searchInput.value.toLowerCase() : "";
+
+    try {
+        const response = await fetch('http://127.0.0.1:5000/get_tasks');
+        let tasks = await response.json();
+
+        if (searchQuery) {
+            tasks = tasks.filter(task => 
+                task.title && task.title.toLowerCase().includes(searchQuery)
+            );
+        }
+
+        const optimizeRes = await fetch('http://127.0.0.1:5000/get_optimized_tasks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ tasks: tasks })
+        });
+        const orderData = await optimizeRes.json();
+        const sortedIDs = orderData.order;
+
+        if (container.children.length === 0 || searchQuery !== "") {
+            renderTasks(tasks, sortedIDs);
+        } else {
+            sortedIDs.forEach((id, index) => {
+                const element = document.querySelector(`.task-card[data-id="${id}"]`);
+                if (element && container.children[index] !== element) {
+                    container.insertBefore(element, container.children[index]);
+                }
+            });
+        }
+
+        updateOverdueStatus();
+    } catch (e) {
+        console.error("Dynamic sorting or filtering failed", e);
+    }
+}
+
+function renderTasks(tasks, sortedIDs) {
+    const container = document.getElementById("taskDisplay");
+    container.innerHTML = "";
+    const sortedTasks = tasks.sort((a, b) => sortedIDs.indexOf(a.id) - sortedIDs.indexOf(b.id));
+    sortedTasks.forEach(data => {
+        if (!data.parentID) {
+            const taskWrapper = createTaskElement(data, tasks);
+            container.appendChild(taskWrapper);
+        }
+    });
+    updateOverdueStatus();
+}
+
+function createTaskElement(data, allTasks) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "task-wrapper";
+    wrapper.id = `wrapper-${data.id}`;
+    const isSubtask = !!data.parentID;
+    const card = document.createElement("div");
+    card.className = `task-card ${isSubtask ? 'is-subtask' : ''}`;
+    card.setAttribute("data-id", data.id);
+    const dateInputs = isSubtask ? '' : `
+        <input type="datetime-local" id="start-${data.id}" value="${data.start}" oninput="autoUpdate('${data.id}')">
+        <input type="datetime-local" id="end-${data.id}" value="${data.end}" oninput="autoUpdate('${data.id}')">
+    `;
+    
+    card.innerHTML = `
+        <input type="text" id="task-${data.id}" value="${data.title}" oninput="autoUpdate('${data.id}')">
+        ${dateInputs}
+        <button class="add-subtask-btn" onclick="addSubTask('${data.id}')">Add Sub-task</button>
+        <button class="delete-btn" onclick="deleteTask('${data.id}')">Delete</button>
+    `;
+    wrapper.appendChild(card);
+    const subContainer = document.createElement("div");
+    subContainer.className = "subtask-container";
+    subContainer.id = `sub-container-${data.id}`;
+    wrapper.appendChild(subContainer);
+    const children = allTasks.filter(t => t.parentID === data.id);
+    children.forEach(child => {
+        subContainer.appendChild(createTaskElement(child, allTasks));
+    });
+    return wrapper;
+}
+
+async function addSubTask(parentId) {
+    const parentStart = document.getElementById(`start-${parentId}`)?.value || "";
+    const parentEnd = document.getElementById(`end-${parentId}`)?.value || "";
+
+    const subTaskData = {
+        title: "New Sub-task",
+        start: parentStart,
+        end: parentEnd,
+        parentID: parentId,
+        status: "pending"
+    };
+
+    try {
+        const response = await fetch('http://127.0.0.1:5000/add_task', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(subTaskData)
+        });
+        
+        if (response.ok) {
+            await displayTasks(); 
+        }
+    } catch (err) {
+        console.error("Error adding sub-task:", err);
+    }
+}
+
+async function deleteTask(id) {
+    if (!confirm("Are you sure you want to delete this task?")) return;
+    try {
+        const response = await fetch(`http://127.0.0.1:5000/delete_task/${id}`, { 
+            method: 'DELETE' 
+        });
+        if (response.ok) {
+            const tx = db.transaction(["tasks"], "readwrite");
+            const store = tx.objectStore("tasks");
+            store.delete(isNaN(id) ? id : Number(id));  
+            tx.oncomplete = () => {
+                const card = document.querySelector(`.task-card[data-id="${id}"]`);
+                if (card) card.remove();
+                console.log("Task deleted everywhere.");
+            };
+        }
+    } catch (err) {
+        console.error("Delete failed:", err);
+        alert("Could not delete task. Is the backend running?");
+    }
+}
+
+function autoUpdate(id) {
+    const titleInput = document.getElementById(`task-${id}`);
+    const startInput = document.getElementById(`start-${id}`);
+    const endInput = document.getElementById(`end-${id}`);
+    if (!titleInput) return;
+    const updated = {
+        title: titleInput.value,
+        start: startInput ? startInput.value : "",
+        end: endInput ? endInput.value : ""
+    };
+    fetch(`http://127.0.0.1:5000/update_task/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated)
+    })
+    .catch(err => console.error("Sync Error:", err));
+}
+function updateClock() {
+    const now = new Date();
+    document.getElementById("dateFormat1").innerText = now.toLocaleString('default', { weekday: 'short', month: 'long', day: '2-digit', year: 'numeric' });
+    document.getElementById("dateFormat2").innerText = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+    document.getElementById("timeFormat").innerText = now.toLocaleTimeString('en-GB', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 2 });
+}
+function updateOverdueStatus() {
+    document.querySelectorAll(".task-card").forEach(card => {
+    const id = card.getAttribute("data-id");
+    const start = new Date(document.getElementById(`start-${id}`).value);
+    const end = new Date(document.getElementById(`end-${id}`).value);
+    const now = new Date();
+        if (isNaN(start) || isNaN(end)) return;
+        let progress = Math.min(Math.max((now - start) / (end - start), 0), 1);
+        card.style.background = `linear-gradient(to right, rgb(${Math.floor(255 * progress)}, ${Math.floor(255 * (1 - progress))}, 0) ${progress * 100}%, #1a1d23 ${progress * 100}%)`;
+        now > end ? card.classList.add("overdue") : card.classList.remove("overdue");
+    });
+}
+function updateMeter() {
+    const now = new Date();
+    const hours = now.getHours();
+    const dailyPercent = ((hours * 3600 + now.getMinutes() * 60 + now.getSeconds()) / 86400) * 100;
+    const dayMeter = document.getElementById('independent-meter');
+    if (dayMeter) {
+        dayMeter.style.width = dailyPercent + '%';
+        const dayColors = { 0: '#FFFFFF', 5: '#FF6200', 6: '#84d6ff', 8: '#DBFFFF', 12: '#FFFF00', 15: '#a4e8d4', 16: '#73FF00', 17: '#AFBDE3', 18: '#71A871', 19: '#00008B', 22: '#FFFFFF' };
+        const activeHour = Object.keys(dayColors).reverse().find(h => hours >= h);
+        dayMeter.style.backgroundColor = dayColors[activeHour];
+    }
+    const currentDayDate = now.getDate();
+    const currentDayOfWeek = now.getDay();
+    const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+    const monthPercent = ((currentDayDate - 1 + (dailyPercent / 100)) / daysInMonth) * 100;
+    
+    const monthMeter = document.getElementById('independent-meter-month');
+    if (monthMeter) {
+        monthMeter.style.width = monthPercent + '%';
+        const weekColors = [
+            '#FFA500', // 0: Sunday (Orange)
+            '#8B4513', // 1: Monday (Brown)
+            '#DC143C', // 2: Tuesday (Crimson)
+            '#FFFFFF', // 3: Wednesday (White)
+            '#FFA500', // 4: Thursday (Orange)
+            '#00008B', // 5: Friday (Ink Blue)
+            '#AFBDE3'  // 6: Saturday (Dusky Blue - 5pm-6pm equivalent)
+        ];
+        monthMeter.style.backgroundColor = weekColors[currentDayOfWeek];
+    }
+
+    const startOfYear = new Date(now.getFullYear(), 0, 1);
+    const endOfYear = new Date(now.getFullYear() + 1, 0, 1);
+    const yearPercent = ((now - startOfYear) / (endOfYear - startOfYear)) * 100;
+    
+    const yearMeter = document.getElementById('independent-meter-year');
+    if (yearMeter) {
+        yearMeter.style.width = yearPercent + '%';
+        const monthIndex = now.getMonth();
+        const yearColors = [
+            '#00FF00', // Jan: Lime
+            '#FFA500', // Feb: Orange
+            '#00008B', // Mar: Dark Blue
+            '#FF4C4C', // Apr: Crimson/Light Red
+            '#00008B', // May: Dark Blue
+            '#00FF00', // Jun: Lime
+            '#00FF00', // Jul: Lime
+            '#FFD700', // Aug: Gold
+            '#EE82EE', // Sep: Violet
+            '#800080', // Oct: Purple
+            '#E6E6FA', // Nov: Lavender
+            '#800080'  // Dec: Purple
+        ];
+        yearMeter.style.backgroundColor = yearColors[monthIndex];
+    }
+}
+async function toggleCamera() {
+    const btn = document.getElementById('cameraToggleButton');
+    if (pythonFeed.style.display === 'block') {
+        pythonFeed.style.display = 'none';
+        pythonFeed.src = "";
+        clearInterval(emotionFetcher);
+    } else {
+        pythonFeed.src = "http://127.0.0.1:5000/video_feed"; 
+        pythonFeed.style.display = 'block';
+        emotionFetcher = setInterval(async () => {
+            try {
+                const res = await fetch('http://127.0.0.1:5000/get_emotion');
+                const data = await res.json();
+                if (currentStableMood !== data.emotion) {
+                            currentStableMood = data.emotion || "NEUTRAL";
+                            displayTasks();
+                        }
+                        document.getElementById('emotionDisplay').innerText = `Mood: ${currentStableMood} (${data.percentage || '0%'})`;
+                    } catch (e) {
+                        document.getElementById('emotionDisplay').innerText = "Mood: Error Connecting";
+                    }
+                }, 3000);
+            }
+        }
+
+function handleSpeech(btn, fn) {
+    const utterance = new SpeechSynthesisUtterance(btn.getAttribute('data-text'));
+    const emoji = btn.querySelector('span');
+    utterance.onstart = () => { if (emoji) emoji.innerText = '🔊'; };
+    utterance.onend = () => { if (emoji) emoji.innerText = '🔇'; };
+    speechSynthesis.speak(utterance);
+    if (fn) fn();
+}
+
+async function sendToAI() {
+    const inputField = document.getElementById('user-input');
+    const userInput = inputField.value;
+    if (!userInput) return;
+    saveMessage("You", userInput);
+    const contextualMessage = `[Current User Mood: ${currentStableMood}] ${userInput}`;
+    const payload = {
+        message: contextualMessage, 
+        emotion: currentStableMood
+    };
+
+    try {
+        const response = await fetch('http://127.0.0.1:5000/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        const chatBox = document.getElementById('chat-display');
+        saveMessage("AI", data.reply);
+        const formattedReply = marked.parse(data.reply);
+        chatBox.innerHTML += `<p><b>🧑 You:</b> ${userInput}</p>
+                              <div class="ai-reply-container"><b>🤖 AI:</b> ${formattedReply}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+        inputField.value = "";
+        const voice = await loadVoice();
+        const utterance = new SpeechSynthesisUtterance(data.reply);
+        utterance.voice = voice;
+        utterance.pitch = 1.1; 
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+    } catch (error) {
+        console.error("AI Error:", error);
+    }
+}
+
+function saveMessage(sender, text) {
+    const tx = db.transaction(["chat_history"], "readwrite");
+    const store = tx.objectStore("chat_history");
+    store.add({ sender, text, timestamp: new Date() });
+}
+
+function loadChatHistory() {
+    const chatBox = document.getElementById('chat-display');
+    const tx = db.transaction(["chat_history"], "readonly");
+    const store = tx.objectStore("chat_history");
+    const req = store.getAll();
+    req.onsuccess = (e) => {
+        const history = e.target.result;
+        if (history.length > 0) {
+            chatBox.innerHTML = ""; 
+            history.forEach(msg => {
+                const content = msg.sender === "AI" ? marked.parse(msg.text) : msg.text;
+                chatBox.innerHTML += `<p><b>${msg.sender}:</b> ${content}</p>`;
+            });
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    };
+}
+document.getElementById('clear-chat-btn').addEventListener('click', clearChatHistory);
+
+function clearChatHistory() {
+    const firstCheck = confirm("Do you want to clear the chat with AI?");
+    if (firstCheck) {
+        const verificationCode = Math.floor(1000 + Math.random() * 9000);
+        const userInput = prompt(`To confirm deletion, please enter the following numbers: ${verificationCode}`);
+        if (userInput === verificationCode.toString()) {
+            const tx = db.transaction(["chat_history"], "readwrite");
+            const store = tx.objectStore("chat_history");
+            const request = store.clear();
+request.onsuccess = async () => {
+    try {
+        await fetch('http://127.0.0.1:5000/clear_chat', { method: 'POST' });
+    } catch (e) {
+        console.error("Backend chat clear failed");
+    }
+    const chatBox = document.getElementById('chat-display');
+    chatBox.innerHTML = `<p><i>System: Chat history deleted successfully.</i></p>`;
+    alert("Chat has been completely deleted.");
+};       
+            request.onerror = (e) => {
+                console.error("Database Error:", e.target.error);
+            };
+        } else if (userInput === null) {
+            alert("Deletion cancelled.");
+        } else {
+            alert("Incorrect numbers entered. Chat was not deleted.");
+        }
+    } else {
+        console.log("User chose not to delete chat.");
+    }
+}
+
+async function syncTaskWithDB(taskId, updatedFields) {
+    try {
+        const response = await fetch(`http://localhost:5000/update_task/${taskId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedFields)
+        });
+        return await response.json();
+    } catch (err) {
+        console.error("Dynamic save failed:", err);
+    }
+}
+
+function initBlob() {
+    const canvas = document.querySelector(".eakn-random-blob");
+    const ctx = canvas.getContext("2d");
+    canvas.width = 400; canvas.height = 130;
+    let scale = 1, pts = [], dragging = false;
+    const baseRadius = 45, variation = 15;
+
+    document.querySelector(".zoom-in").onclick = () => { if (scale < 1.8) canvas.style.transform = `scale(${scale += 0.1})`; };
+    document.querySelector(".zoom-out").onclick = () => { if (scale > 0.5) canvas.style.transform = `scale(${scale -= 0.1})`; };
+
+    window.createBlob = function() {
+        pts = [];
+        for (let i = 0; i < aiBlobPoints; i++) {
+            let angle = i * (Math.PI * 2 / aiBlobPoints);
+            let r = baseRadius + (Math.random() * variation);
+            let x = 200 + Math.cos(angle) * r, y = 65 + Math.sin(angle) * r;
+            pts.push({ x, y, ox: x, oy: y, vx: 0, vy: 0 });
+        }
+    };
+
+    function draw() {
+        ctx.clearRect(0, 0, 400, 130);
+        ctx.beginPath();
+        for (let i = 0; i < aiBlobPoints; i++) {
+            let p0 = pts[i], p1 = pts[(i + 1) % aiBlobPoints], mx = (p0.x + p1.x) / 2, my = (p0.y + p1.y) / 2;
+            if (i === 0) ctx.moveTo(mx, my);
+            ctx.quadraticCurveTo(p0.x, p0.y, mx, my);
+        }
+        ctx.closePath();
+        
+        ctx.fillStyle = aiBlobColor;
+        ctx.fill();
+
+        pts.forEach(p => { p.x += (p.ox - p.x) * 0.02; p.y += (p.oy - p.y) * 0.02; });
+        requestAnimationFrame(draw);
+    }
+
+    canvas.onmousedown = () => dragging = true;
+    window.onmouseup = () => dragging = false;
+    canvas.onmousemove = (e) => {
+        if (!dragging) return;
+        const rect = canvas.getBoundingClientRect();
+        pts.forEach(p => {
+            let dx = (e.clientX - rect.left) - p.x, dy = (e.clientY - rect.top) - p.y;
+            if (Math.sqrt(dx * dx + dy * dy) < 120) { p.x += dx * 0.15; p.y += dy * 0.15; }
+        });
+    };
+
+    window.createBlob(); 
+    draw();
+}
+
+        setInterval(updateClock, 50);
+        setInterval(displayTasks, 60000);
+        setInterval(updateOverdueStatus, 1000);
+        setInterval(updateMeter, 1000);
+        setInterval(() => {
+            screenTimeSeconds++;
+            document.getElementById("time-spent-text").innerText = `⏳ Time Spent on the Screen: ${String(Math.floor(screenTimeSeconds / 3600)).padStart(2, '0')}:${String(Math.floor((screenTimeSeconds % 3600) / 60)).padStart(2, '0')}:${String(screenTimeSeconds % 60).padStart(2, '0')}`;
+            localStorage.setItem("screenTimeSeconds", screenTimeSeconds);
+        }, 1000);
+
+        document.getElementById('send-btn').addEventListener('click', sendToAI);
+        window.addEventListener('beforeunload', () => navigator.sendBeacon('http://127.0.0.1:5000/shutdown'));
+        updateClock(); updateMeter();
+
+async function syncBlobWithAI() {
+    try {
+        const res = await fetch('http://127.0.0.1:5000/get_blob_design');
+        const data = await res.json();
+        
+        aiBlobColor = data.color;
+        
+        if (aiBlobPoints !== data.points) {
+            aiBlobPoints = data.points;
+            if (typeof window.createBlob === "function") window.createBlob();
+        }
+    } catch (e) {
+        console.log("Waiting for Python backend...");
+    }
+}
+setInterval(syncBlobWithAI, 10000);
+
+async function loadModels() {
+    const MODEL_URL = '/models'; 
+    await Promise.all([
+        faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+        faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+        faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL)
+    ]);
+    startVideo();
+}
+
+async function saveEmotionToDB(emotion) {
+    try {
+        await fetch('http://localhost:5000/update_current_emotion', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ emotion: emotion, timestamp: new Date() })
+        });
+    } catch (err) {
+        console.error("Failed to sync emotion with DB:", err);
+    }
+}
+
+const FILE_API = "http://127.0.0.1:5000";
+
+document.getElementById("repoFloatingBtn").onclick = () => {
+    document.getElementById("repoModal").style.display = "flex";
+    loadRepoFiles();
+};
+
+function closeRepo() {
+    document.getElementById("repoModal").style.display = "none";
+}
+
+async function loadRepoFiles() {
+    try {
+        const res = await fetch(FILE_API + "/files");
+        if (!res.ok) throw new Error("Failed to fetch files");
+        const files = await res.json();
+        const list = document.getElementById("repoList");
+        list.innerHTML = "";
+        list.style.display = "grid";
+        list.style.gridTemplateColumns = "repeat(auto-fill,minmax(180px,1fr))";
+        list.style.gap = "12px";
+
+        files.forEach(f => {
+            const card = document.createElement("div");
+            card.style = `
+                background:#1f1f1f;
+                border-radius:12px;
+                padding:10px;
+                display:flex;
+                flex-direction:column;
+                gap:10px;
+                box-shadow:0 5px 15px rgba(0,0,0,.4);
+            `;
+
+            const title = document.createElement("div");
+            title.innerText = f.name || "Unnamed File";
+            title.style = "font-size:12px;word-break:break-all;color:#fff;";
+            card.appendChild(title);
+            const preview = document.createElement("div");
+            preview.style = "height:100px;display:flex;justify-content:center;align-items:center;background:#111;border-radius:8px;overflow:hidden;";
+            const type = f.contentType || "";
+            if (type.startsWith("image")) {
+                const img = document.createElement("img");
+                img.src = FILE_API + "/file/" + f._id;
+                img.style = "max-width:100%;max-height:100%;";
+                preview.appendChild(img);
+            } else {
+                preview.innerHTML = "📄";
+                preview.style.fontSize = "40px";
+            }
+            card.appendChild(preview);
+            const actions = document.createElement("div");
+            actions.style = "display:flex;gap:6px;";
+            const uploadBtn = document.createElement("button");
+            uploadBtn.innerText = "➕";
+            uploadBtn.style = btnStyle();
+            uploadBtn.onclick = () => replaceFile(f._id);
+            const viewBtn = document.createElement("button");
+            viewBtn.innerText = "👁️";
+            viewBtn.style = btnStyle();
+            viewBtn.onclick = () => window.open(FILE_API + "/file/" + f._id, "_blank");
+            const deleteBtn = document.createElement("button");
+            deleteBtn.innerText = "🗑️";
+            deleteBtn.style = btnStyle();
+            deleteBtn.onclick = () => deleteRepoFile(f._id);
+            actions.append(uploadBtn, viewBtn, deleteBtn);
+            card.appendChild(actions);
+            list.appendChild(card);
+        });
+    } catch (err) {
+        console.error(err);
+        alert("⚠️ Failed to load files. Is backend running?");
+    }
+}
+
+function btnStyle() {
+    return `
+        flex:1;
+        background:#3b83ff;
+        color:#fff;
+        border:none;
+        border-radius:6px;
+        padding:6px;
+        cursor:pointer;
+    `;
+}
+
+function replaceFile(id) {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.onchange = async e => {
+        try {
+            const file = e.target.files[0];
+            if (!file) return;
+            const formData = new FormData();
+            formData.append("file", file);
+            const uploadRes = await fetch(FILE_API + "/upload", {
+                method: "POST",
+                body: formData
+            });
+            if (!uploadRes.ok) throw new Error("Upload failed");
+            const deleteRes = await fetch(FILE_API + "/delete/" + id, {
+                method: "DELETE"
+            });
+            if (!deleteRes.ok) throw new Error("Delete failed");
+            loadRepoFiles();
+        } catch (err) {
+            console.error(err);
+            alert("⚠️ Replace failed");
+        }
+    };
+    input.click();
+}
+
+document.getElementById("fileInput").addEventListener("change", async e => {
+    try {
+        const allowedTypes = [
+            "application/pdf","application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "application/vnd.ms-powerpoint",
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            "application/vnd.ms-excel",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "text/plain","text/csv","application/json",
+            "image/jpeg","image/png","image/webp"
+        ];
+        const allowedExt = [
+            ".pdf",".doc",".docx",".ppt",".pptx",".xls",".xlsx",
+            ".txt",".csv",".json",".jpg",".jpeg",".png",".webp"
+        ];
+        const files = e.target.files;
+        if (!files.length) return;
+        for (let file of files) {
+            const ext = file.name.substring(file.name.lastIndexOf(".")).toLowerCase();
+            if (!allowedTypes.includes(file.type) || !allowedExt.includes(ext)) {
+                alert(`❌ ${file.name} not supported`);
+                continue;
+            }
+            const formData = new FormData();
+            formData.append("file", file);
+            const res = await fetch(FILE_API + "/upload", {
+                method: "POST",
+                body: formData
+            });
+            if (!res.ok) throw new Error("Upload failed");
+        }
+        loadRepoFiles();
+    } catch (err) {
+        console.error(err);
+        alert("⚠️ Upload error");
+    }
+});
+async function viewRepoFile() {
+    try {
+        const res = await fetch(FILE_API + "/files");
+        if (!res.ok) throw new Error("Fetch failed");
+        const files = await res.json();
+        const list = document.getElementById("repoList");
+        list.innerHTML = "";
+        for (let f of files) {
+            const container = document.createElement("div");
+            container.style = "background:#111;padding:10px;border-radius:8px;";
+            const title = document.createElement("div");
+            title.innerText = f.name;
+            title.style = "margin-bottom:8px;color:#3b83ff;font-weight:bold;";
+            container.appendChild(title);
+            const viewer = document.createElement("div");
+            const type = f.contentType || "";
+            if (type.startsWith("image")) {
+                const img = document.createElement("img");
+                img.src = FILE_API + "/file/" + f._id;
+                img.style = "max-width:100%;border-radius:6px;";
+                viewer.appendChild(img);
+            }
+            else if (type === "application/pdf") {
+                const iframe = document.createElement("iframe");
+                iframe.src = FILE_API + "/file/" + f._id;
+                iframe.style = "width:100%;height:400px;border-radius:6px;";
+                viewer.appendChild(iframe);
+            }
+            else if (type.includes("text") || type.includes("json") || type.includes("csv")) {
+                const textData = await fetch(FILE_API + "/file/" + f._id).then(r => r.text());
+                const pre = document.createElement("pre");
+                pre.innerText = textData;
+                pre.style = "white-space:pre-wrap;color:#fff;";
+                viewer.appendChild(pre);
+            }
+            else {
+                const link = document.createElement("a");
+                link.href = FILE_API + "/file/" + f._id;
+                link.target = "_blank";
+                link.innerText = "Open File";
+                link.style = "color:#3b83ff;";
+                viewer.appendChild(link);
+            }
+            container.appendChild(viewer);
+            list.appendChild(container);
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+async function deleteRepoFile(id) {
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    alert("Enter OTP: " + otp);
+    const user = prompt("Enter OTP:");
+    if (user === String(otp)) {
+        try {
+            const res = await fetch(FILE_API + "/delete/" + id, {
+                method: "DELETE"
+            });
+            if (!res.ok) throw new Error("Delete failed");
+            loadRepoFiles();
+        } catch (err) {
+            console.error(err);
+            alert("⚠️ Delete failed");
+        }
+    } else {
+        alert("Wrong OTP");
+    }
+}
+function displayUserInfo() {
+    const name = sessionStorage.getItem("eakn_user_name");
+    const email = sessionStorage.getItem("eakn_user_email");
+    if (name && email) {
+        document.getElementById("logged-user-name").innerText = name;
+        document.getElementById("logged-user-email").innerText = email;
+    } else {
+        window.location.href = "signinup.html";
+    }
+}
+function logout() {
+    sessionStorage.clear();
+    window.location.href = "signinup.html";
+}
+window.onload = () => {
+    displayUserInfo();
+};
+
+async function updateBlobBalance() {
+    try {
+        const res = await fetch('http://127.0.0.1:5000/get_blob_design');
+        const data = await res.json();
+        
+        aiBlobColor = data.color;
+        aiBlobPoints = data.points;
+
+        if (typeof createPoints === "function") {
+            createPoints(); 
+        }
+    } catch (e) {
+        console.log("Blob sync paused...");
+    }
+}
+
+setInterval(updateBlobBalance, 10000);
+
+document.getElementById('openBtn').onclick = () => {
+    document.getElementById('dashboard').style.display = 'block';
+};
+
+document.getElementById('closeBtn').onclick = () => {
+    document.getElementById('dashboard').style.display = 'none';
+};
+
+let timeout = null;
+const dashboardText = document.getElementById("dashboard-textarea");
+
+dashboardText.addEventListener('input', () => {
+    clearTimeout(timeout);
+
+    timeout = setTimeout(async () => {
+        const email = sessionStorage.getItem("eakn_user_email");
+        const text = dashboardText.value;
+
+        if (!email) return;
+
+        try {
+            const response = await fetch('http://127.0.0.1:5000/save_dashboard', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, text: text })
+            });
+            const result = await response.json();
+            console.log("Autosave status:", result.message);
+        } catch (error) {
+            console.error("Autosave failed. Is the Python backend running?");
+        }
+    }, 1000); 
+});
+</script>
+</body>
+</html>

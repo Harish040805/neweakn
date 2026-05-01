@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emotion Aware Knowledge Navigator | Sign In / Sign Up</title>
+<link rel="stylesheet" href="D:\eaknnewproject\signinup.css">
+<link rel="shortcut icon" href="https://github.com/Harish040805/eakn/blob/main/eaknlogo.png?raw=true" type="image/x-icon">
+</head>
+<body oncontextmenu="return false" oncopy="return false" oncut="return false" onpaste="return false" ondragstart="return false" onselectstart="return false">
+<div class="wrapper">
+  <center>
+    <img src="https://github.com/Harish040805/eakn/blob/main/eaknlogo.png?raw=true" class="logo-circle">
+  </center>
+  <div class="title-text">
+    <div class="title login" style="color:#3b83ff;">Sign In</div>
+    <div class="title signup" style="color:#3b83ff;">Sign Up</div>
+  </div>
+  <div class="form-container">
+    <div class="slide-controls">
+      <input type="radio" name="slide" id="login" checked>
+      <input type="radio" name="slide" id="signup">
+      <label for="login" class="slide login" style="color:#2e2e2e;">Sign In</label>
+      <label for="signup" class="slide signup" style="color:#2e2e2e;">Sign Up</label>
+      <div class="slider-tab"></div>
+    </div>
+    <div class="form-inner">
+      <!-- LOGIN -->
+      <form id="loginForm" class="login" autocomplete="off">
+        <div class="field">
+          <input type="email" name="email" placeholder="📧 Email Address" required>
+        </div>
+        <div class="field">
+          <input type="password" name="password" placeholder="🔐 Password" required>
+        </div>
+<div class="field">
+<input type="password" name="confirmPassword" placeholder="🔐 Confirm Password" required>
+</div>
+<div class="pass-link">
+  <a href="#" id="forgotPass">Forgot password?</a>
+</div>
+        <br>
+        <div class="field btn">
+          <div class="btn-layer"></div>
+          <button type="submit">Sign In ▸▸▸ </button>
+        </div>
+        <div class="signup-link">
+          Not a member? <a href="#">Signup now</a>
+        </div>
+      </form>
+      <!-- SIGNUP -->
+      <form class="signup" autocomplete="off">
+        <div class="field">
+          <input type="text" name="username" placeholder="🙍🏻‍♂️ User Name" required>
+        </div>
+        <div class="field">
+          <input type="email" name="email" placeholder="📧 Email Address" required>
+        </div>
+        <div class="field">
+          <input type="password" name="password" placeholder="🔐 Password" required>
+        </div>
+        <div class="field">
+          <input type="password" name="confirmPassword" placeholder="🔐 Confirm Password" required>
+        </div>
+        <br>
+        <div class="field btn">
+          <div class="btn-layer"></div>
+          <button type="submit">Sign Up ▸▸▸</button>
+        </div>
+        <br><br>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+const loginForm = document.querySelector("form.login");
+const signupForm = document.querySelector("form.signup");
+const loginText = document.querySelector(".title-text .login");
+const signupBtn = document.querySelector("label.signup");
+const loginBtn = document.querySelector("label.login");
+const signupLink = document.querySelector(".signup-link a");
+const loginRadio = document.querySelector("#login");
+const signupRadio = document.querySelector("#signup");
+
+signupBtn.onclick = () => {
+    loginForm.style.marginLeft = "-50%";
+    loginText.style.marginLeft = "-50%";
+};
+
+loginBtn.onclick = () => {
+    loginForm.style.marginLeft = "0%";
+    loginText.style.marginLeft = "0%";
+};
+
+signupLink.onclick = (e) => {
+    e.preventDefault();
+    signupRadio.checked = true;
+    loginForm.style.marginLeft = "-50%";
+    loginText.style.marginLeft = "-50%";
+};
+
+const validatePasswordRegex = (password) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=(?:.*[!@#$%^&*()_\-+={}[\]|\\:;"'<>,.?/]){2,}).+$/;
+    return regex.test(password);
+};
+
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    
+    const pass = this.password.value;
+    const confirmPass = this.confirmPassword.value;
+
+    if (pass !== confirmPass) {
+        alert("Sign In Error: Passwords do not match!");
+        return;
+    }
+
+    if (!validatePasswordRegex(pass)) {
+        alert("Sign In Error: Password requirements not met.");
+        return;
+    }
+
+    try {
+        const response = await fetch('http://127.0.0.1:5000/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: this.email.value,
+                password: pass
+            })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.status === "success") {
+            sessionStorage.setItem("eakn_user_name", result.username);
+            sessionStorage.setItem("eakn_user_email", result.email);
+            
+            alert("Login Successful! Redirecting to EAKN...");
+            
+            window.location.replace("eakn.html"); 
+        } else {
+            alert(result.message || "Invalid email or password!");
+        }
+    } catch (error) {
+        console.error("Login Error:", error);
+        alert("Connection Error: Is the Python backend running?");
+    }
+});
+
+signupForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const pass = this.password.value;
+    const confirmPass = this.confirmPassword.value;
+
+    if (pass !== confirmPass) {
+        alert("Sign Up Error: Passwords do not match!");
+        return;
+    }
+
+    if (!validatePasswordRegex(pass)) {
+        alert("Sign Up Error: Password must have atleast 1 uppercase, 1 lowercase, 1 number and 2 different special characters.");
+        return;
+    }
+
+    try {
+        const userData = {
+            username: this.username.value,
+            email: this.email.value,
+            password: pass
+        };
+
+        const response = await fetch('http://127.0.0.1:5000/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData)
+        });
+
+        const result = await response.json();
+        
+        if (result.status === "success") {
+            alert("Registration Successful! You can now Sign In.");
+            loginRadio.checked = true;
+            loginForm.style.marginLeft = "0%";
+            loginText.style.marginLeft = "0%";
+        } else {
+            alert(result.message);
+        }
+    } catch (error) {
+        alert("Connection Error: Could not reach the server.");
+    }
+});
+
+document.getElementById("forgotPass").onclick = (e) => {
+    e.preventDefault();
+    const randomCode = Math.floor(1000 + Math.random() * 9000);
+    const userEntry = prompt(`To reset password, please type this number: ${randomCode}`);
+    if (userEntry === String(randomCode)) {
+        alert("Verification Successful! In a full system, we would send a reset link to your email.");
+    } else {
+        alert("Verification Failed. Numbers did not match.");
+    }
+};
+
+document.addEventListener('keydown', function(e) {
+    const currentInput = document.activeElement;
+    if (currentInput.tagName !== 'INPUT') return;
+
+    const form = currentInput.closest('form');
+    if (!form) return;
+
+    const inputs = Array.from(form.querySelectorAll('input:not([type="radio"]):not([type="submit"])'));
+    const index = inputs.indexOf(currentInput);
+
+    if (e.key === 'ArrowDown') {
+        if (index < inputs.length - 1) {
+            e.preventDefault();
+            inputs[index + 1].focus();
+        }
+    } else if (e.key === 'ArrowUp') {
+        if (index > 0) {
+            e.preventDefault();
+            inputs[index - 1].focus();
+        }
+    }
+});
+</script>
+</body>
+</html>

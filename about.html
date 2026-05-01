@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Aware Knowledge Navigator | About</title>
+    <link rel="shortcut icon" href="https://github.com/Harish040805/eakn/blob/main/eaknlogo.png?raw=true" type="image/x-icon">
+    <style>
+        body { background: #3b83ff; padding: 20px; color: #4c4c4c; font-family: Arial, sans-serif; user-select: none; display: flex; justify-content: center; 
+            align-items: center; min-height: 100vh; margin: 0; position: relative; }
+        .about-container{ max-width:900px; background: #fff; padding:40px; border-radius:20px; border:2px solid #3b83ff; position: relative; }
+        .logo-circle{ width:200px; height:200px; border-radius:50%; object-fit:cover; margin-bottom:20px; border:2px solid #3b83ff; display: block; margin: 0 auto 20px auto; 
+            cursor: pointer !important; }
+        h1{ text-align:center; margin-bottom:20px; color:#3b83ff; font-size:32px; }
+        .section-header { display: flex; align-items: center; justify-content: space-between; margin-top: 30px; }
+        h2{ color:#1f62d6; font-size:20px; margin: 0; }  
+        p{ line-height:1.7; font-size:16px; margin-bottom:15px; text-align:justify; }
+        ul{ margin-left:20px; line-height:1.6; }
+        li{ margin-bottom:8px; }
+        .highlight{ color:#ffd900; font-weight:bold; }
+        .footer{ margin-top:30px; text-align:center; font-size:14px; color:#7d7d7d; }
+        .read-btn { background: #3b83ff; color: white; border: none; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 12px; transition: 0.3s; }
+        .read-btn:hover { background: #1f62d6; }
+        .float-read-all { position: fixed; top: 20px; right: 20px; z-index: 1000; background: #ffd900; color: #1f62d6; padding: 12px 20px; border-radius: 50px;
+            font-weight: bold; border: 2px solid #1f62d6; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        .float-read-all:hover { transform: scale(1.05); }
+        ::-webkit-scrollbar{ width:8px; height:8px; }
+        ::-webkit-scrollbar-track{ background:#1a1d23; }
+        ::-webkit-scrollbar-thumb{ background:#3b83ff; border-radius:10px; border:2px solid #ffffff; }
+        ::-webkit-scrollbar-thumb:hover{ background:#2a6edb; }
+        *{ scrollbar-width: thick; scrollbar-color: #3b83ff #1a1d23; }
+    </style>
+</head>
+<body>
+    <button class="float-read-all" onclick="readSection('about-container')">🔊 Read Full Page</button>
+    <div class="about-container" id="about-container">
+        <img src="https://github.com/Harish040805/eakn/blob/main/eaknlogo.png?raw=true" class="logo-circle" onclick="window.location.href='index.html';">
+        <h1>Emotion Aware Knowledge Navigator (EAKN)</h1>
+        <div id="intro-section">
+            <button class="read-btn" onclick="readSection('intro-section')">Listen</button>
+            <p>
+                The <span class="highlight">Emotion Aware Knowledge Navigator</span> is an Emotion Detection and Productivity Tool designed to intelligently assist users 
+                in completing their tasks efficiently by analyzing the user's emotional state and dynamically arranging tasks based on their current mindset to help them 
+                complete work faster and with better focus.
+            </p>
+        </div>
+        <div id="vision-section">
+            <div class="section-header">
+                <h2>Project Vision</h2>
+                <button class="read-btn" onclick="readSection('vision-section')">Listen</button>
+            </div>
+            <p>
+                EAKN aims to bridge the gap between emotion detection and task management. Instead of forcing productivity through rigid scheduling, the system adapts 
+                according to how the user feels, creating a more natural and effective workflow.
+            </p>
+        </div>
+        <div id="features-section">
+            <div class="section-header">
+                <h2>Core Features</h2>
+                <button class="read-btn" onclick="readSection('features-section')">Listen</button>
+            </div>
+            <ul>
+                <li>Real-time Emotion Detection</li>
+                <li>Emotion-Based Task Prioritization</li>
+                <li>Smart Productivity Optimization</li>
+                <li>Dynamic Task Arrangement</li>
+                <li>Interactive Voice Assistance</li>
+                <li>Secure User Data Management</li>
+                <li>Repository connected with Database for Storage of files</li>
+            </ul>
+        </div>
+        <div id="works-section">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <button class="read-btn" onclick="readSection('works-section')">Listen</button>
+            </div>
+            <p>
+                The system captures user emotion as input, processes it using AI-based emotion analysis, and categorizes tasks according to emotional compatibility. For 
+                example, analytical tasks may be prioritized during focused states, while creative tasks may be suggested during relaxed or positive moods. The integrated 
+                AI provides solution for the same tasks that are added.
+            </p>
+        </div>
+        <div id="objective-section">
+            <div class="section-header">
+                <h2>Objective</h2>
+                <button class="read-btn" onclick="readSection('objective-section')">Listen</button>
+            </div>
+            <p>
+                The primary objective of EAKN is to enhance productivity while maintaining emotional balance. By aligning work with mindset, users can achieve better 
+                efficiency, reduced stress, and improved performance.
+            </p>
+        </div>
+        <div class="footer">
+            © 2026 EAKN | Emotion Aware Knowledge Navigator
+        </div>
+    </div>
+    <script>
+        function readSection(sectionId) {
+            window.speechSynthesis.cancel();
+            const section = document.getElementById(sectionId);
+            const tempDiv = section.cloneNode(true);
+            const buttons = tempDiv.querySelectorAll('button');
+            buttons.forEach(btn => btn.remove());
+            const textToRead = tempDiv.innerText;
+            const utterance = new SpeechSynthesisUtterance(textToRead);
+            utterance.rate = 1; 
+            utterance.pitch = 1;
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>

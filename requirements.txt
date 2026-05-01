@@ -1,0 +1,12 @@
+Flask
+flask-cors
+pymongo
+tensorflow
+opencv-python-headless
+numpy
+pandas
+pillow
+tqdm
+groq
+python-dotenv
+gunicorn

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emotion Aware Knowledge Navigator | Welcome</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="https://github.com/Harish040805/eakn/blob/main/eaknlogo.png?raw=true" type="image/x-icon">
+</head>
+<body>
+<div class="welcome-box">
+    <div class="header-row">
+        <img src="https://github.com/Harish040805/eakn/blob/main/eaknlogo.png?raw=true" class="logo-circle">
+        <a href="about.html" class="top-button">Help?</a>
+    </div>
+    <div class="title">Emotion Aware Knowledge Navigator</div>
+    <div class="subtitle">Welcome to your intelligent emotional learning assistant platform.</div>    
+    <div class="slider-container" onclick="enterApp()">
+        <div class="slider-track">
+            <div class="slider-thumb" id="welcomeThumb">▶</div>
+            <span class="slider-text" id="welcomeText">Get Started →</span>
+        </div>
+    </div>
+</div>
+<!-- Terms and Conditions Overlay -->
+<div id="termsOverlay" class="overlay">
+    <div class="terms-box">
+        <h2><u>Terms of Service</u></h2>
+        <p>Have you read the terms of service? Do you agree with the terms and conditions?</p>
+        <div class="agreement-row">
+            <input type="checkbox" id="termsCheck">
+            <label for="termsCheck">I have read and accept the terms</label>
+        </div>
+        <div class="button-group">
+            <button class="decline-btn" onclick="closeTerms()">Decline</button>
+            <button class="agree-btn" onclick="verifyAndRedirect()">Agree</button>
+        </div>
+        <a href="termsandservices.html" class="terms-link"><u>Terms of Service</u></a>
+    </div>
+</div>
+<script>
+function enterApp() {
+    const thumb = document.getElementById("welcomeThumb");
+    const text = document.getElementById("welcomeText");
+    const container = document.querySelector(".slider-container");
+
+    const maxMove = container.offsetWidth - thumb.offsetWidth - 10;
+
+    thumb.style.transition = "transform 0.5s ease";
+    thumb.style.transform = `translateX(${maxMove}px)`;
+    text.style.opacity = "0";
+
+    // Show overlay after slider animation finishes
+    setTimeout(() => {
+        document.getElementById("termsOverlay").style.display = "flex";
+    }, 600);
+}
+
+function closeTerms() {
+    // Hide overlay and reset slider if declined
+    document.getElementById("termsOverlay").style.display = "none";
+    
+    const thumb = document.getElementById("welcomeThumb");
+    const text = document.getElementById("welcomeText");
+    
+    thumb.style.transform = `translateX(0px)`;
+    text.style.opacity = "1";
+}
+
+function verifyAndRedirect() {
+    const isChecked = document.getElementById("termsCheck").checked;
+    if (isChecked) {
+        const text = document.getElementById("welcomeText");
+        document.getElementById("termsOverlay").style.display = "none";
+        text.innerText = "Loading...";
+        text.style.opacity = "1";
+        setTimeout(() => {
+            text.innerText = "Redirecting...";
+            setTimeout(() => {
+                text.innerText = "Welcome...";
+                setTimeout(() => {
+                    window.location.href = "signinup.html";
+                }, 2000);
+            }, 2000);
+        }, 2000);
+    } else {
+        alert("Please check the box to accept the terms before proceeding.");
+    }
+}
+</script>
+</body>
+</html>
